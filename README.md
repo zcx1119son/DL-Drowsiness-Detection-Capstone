@@ -32,6 +32,7 @@
 
 EAR.py 파일에 정의된 눈 종횡비 계산 함수입니다. 눈의 6개 랜드마크를 활용하여 눈 깜빡임을 정량화합니다.
 
+
 from scipy.spatial import distance as dist
 
 def eye\_aspect\_ratio(eye):  
@@ -39,14 +40,11 @@ def eye\_aspect\_ratio(eye):
     \# \[Dlib의 68개 랜드마크 중 눈의 좌표 번호가 eye 배열의 인덱스로 매핑됨\]  
     A \= dist.euclidean(eye\[1\], eye\[5\])  
     B \= dist.euclidean(eye\[2\], eye\[4\])
-
-    \# 수평 눈 좌표 거리: (p1, p4)의 유클리디안 거리 (눈꼬리와 눈 앞머리)  
+    \n\# 수평 눈 좌표 거리: (p1, p4)의 유클리디안 거리 (눈꼬리와 눈 앞머리)  
     C \= dist.euclidean(eye\[0\], eye\[3\])  
-      
-    \# 눈 종횡비 계산: EAR \= (수직거리\_A \+ 수직거리\_B) / (2.0 \* 수평거리\_C)  
+    \n\# 눈 종횡비 계산: EAR \= (수직거리\_A \+ 수직거리\_B) / (2.0 \* 수평거리\_C)  
     ear \= (A \+ B) / (2.0 \* C)  
     return ear
-
 ### **2\. $\\text{Mouth Aspect Ratio (MAR)}$ 계산 로직**
 
 MAR.py 파일에 정의된 입 종횡비 계산 함수입니다. 입의 12개 랜드마크 중 6개를 활용하여 하품 상태를 감지합니다.
