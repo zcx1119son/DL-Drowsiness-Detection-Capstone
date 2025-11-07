@@ -8,7 +8,7 @@
 
 | 분류 | 기술 | 역할 |
 | :---- | :---- | :---- |
-| **핵심 언어** | $\\text{Python 3.x}$ | 전체 시스템 개발 및 알고리즘 구현 |
+| **핵심 언어** | $\\text{Python 3.10}$ | 전체 시스템 개발 및 알고리즘 구현 |
 | **컴퓨터 비전** | $\\text{OpenCV}$, $\\text{imutils}$ | 실시간 비디오 스트림 처리 및 화면 출력 |
 | **얼굴 랜드마크** | $\\text{Dlib}$ (shape\_predictor\_68\_face\_landmarks.dat) | 얼굴 영역 및 $\\text{68}$개 랜드마크 추출 |
 | **핵심 알고리즘** | $\\text{EAR}$, $\\text{MAR}$, $\\text{PnP}$ | 졸음 징후 감지 및 머리 포즈 추정 |
@@ -32,6 +32,7 @@
 
 EAR.py 파일에 정의된 눈 종횡비 계산 함수입니다. 눈의 6개 랜드마크를 활용하여 눈 깜빡임을 정량화합니다.
 
+```
 from scipy.spatial import distance as dist
 
 def eye\_aspect\_ratio(eye):  
@@ -46,6 +47,7 @@ def eye\_aspect\_ratio(eye):
     \# 눈 종횡비 계산: EAR \= (수직거리\_A \+ 수직거리\_B) / (2.0 \* 수평거리\_C)  
     ear \= (A \+ B) / (2.0 \* C)  
     return ear
+```    
 
 ### **2\. $\\text{Mouth Aspect Ratio (MAR)}$ 계산 로직**
 
