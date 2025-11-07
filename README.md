@@ -46,14 +46,14 @@ def eye\_aspect\_ratio(eye):
     \# 눈 종횡비 계산  
     ear \= (A \+ B) / (2.0 \* C)  
     return ear  
-```
 \# 전체 코드 보기: \[EAR.py 소스 코드\]
+```
 
 ### **2\. $\\text{Mouth Aspect Ratio (MAR)}$ 계산 로직**
 
 MAR.py 파일에 정의된 입 종횡비 계산 함수입니다. 입의 12개 랜드마크 중 6개를 활용하여 하품 상태를 감지합니다.
 
-\# MAR \= (A \+ B) / (2.0 \* C)  
+```\# MAR \= (A \+ B) / (2.0 \* C)  
 from scipy.spatial import distance as dist
 
 def mouth\_aspect\_ratio(mouth):  
@@ -68,12 +68,13 @@ def mouth\_aspect\_ratio(mouth):
     mar \= (A \+ B) / (2.0 \* C)  
     return mar  
 \# 전체 코드 보기: \[MAR.py 소스 코드\]
+```
 
 ### **3\. 머리 포즈 추정 ($\\text{Head}$ $\\text{Pose}$ $\\text{Estimation}$) 핵심**
 
 HeadPose.py는 3$\\text{D}$ 모델 좌표와 $\\text{2D}$ 이미지 좌표를 이용해 카메라 행렬을 구성하고, $\\text{OpenCV}$의 **solvePnP** 함수를 사용해 실시간으로 머리의 회전 벡터를 추정합니다.
 
-from cv2 import cv2  
+```from cv2 import cv2  
 \# ... (model\_points 정의)
 
 def getHeadTiltAndCoords(size, image\_points, frame\_height):  
@@ -95,6 +96,7 @@ def getHeadTiltAndCoords(size, image\_points, frame\_height):
     \# ... (rotationMatrixToEulerAngles 호출)
 
 \# 전체 코드 보기: \[HeadPose.py 소스 코드\]
+```
 
 ## **🛠️ 실행 방법 (How to Run)**
 
