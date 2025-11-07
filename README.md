@@ -2,35 +2,48 @@
 
 ## **🌟 프로젝트 개요**
 
+<<<<<<< HEAD
 이 프로젝트는 $\\text{OpenCV}$와 $\\text{Dlib}$ 라이브러리를 활용하여 **실시간**으로 운전자의 얼굴을 분석하고, **눈 감김, 하품, 머리 기울임**의 세 가지 복합적인 징후를 동시에 감지하여 졸음 운전을 예방하는 캡스톤 프로젝트입니다. $\\text{AI}$ 기반의 $\\text{Computer}$ $\\text{Vision}$ 기술을 적용하여 높은 정확도의 실시간 경고 시스템을 구현하는 데 중점을 두었습니다.
+=======
+이 프로젝트는 **OpenCV**와 **Dlib** 라이브러리를 활용하여 **실시간**으로 운전자의 얼굴을 분석하고, **눈 감김, 하품, 머리 기울임**의 세 가지 복합적인 징후를 동시에 감지하여 졸음 운전을 예방하는 캡스톤 프로젝트입니다. **AI** 기반의 **Computer Vision** 기술을 적용하여 높은 정확도의 실시간 경고 시스템을 구현하는 데 중점을 두었습니다.
+>>>>>>> f8d4d24f1ddf69f2eb7663a8d20b682adb17b849
 
 ## **⚙️ 주요 기술 스택 (Tech Stack)**
 
 | 분류 | 기술 | 역할 |
+<<<<<<< HEAD
 | :---- | :---- | :---- |
 | **핵심 언어** | $\\text{Python 3.10}$ | 전체 시스템 개발 및 알고리즘 구현 |
 | **컴퓨터 비전** | $\\text{OpenCV}$, $\\text{imutils}$ | 실시간 비디오 스트림 처리 및 화면 출력 |
 | **얼굴 랜드마크** | $\\text{Dlib}$ (shape\_predictor\_68\_face\_landmarks.dat) | 얼굴 영역 및 $\\text{68}$개 랜드마크 추출 |
 | **핵심 알고리즘** | $\\text{EAR}$, $\\text{MAR}$, $\\text{PnP}$ | 졸음 징후 감지 및 머리 포즈 추정 |
 | **데이터 처리** | $\\text{NumPy}$, $\\text{SciPy}$ | 행렬 연산 및 유클리디안 거리 계산 |
+=======
+|:----|:----|:----|
+| **핵심 언어** | **Python 3.10** | 전체 시스템 개발 및 알고리즘 구현 |
+| **컴퓨터 비전** | **OpenCV**, **imutils** | 실시간 비디오 스트림 처리 및 화면 출력 |
+| **얼굴 랜드마크** | **Dlib** (`shape_predictor_68_face_landmarks.dat`) | 얼굴 영역 및 **68**개 랜드마크 추출 |
+| **핵심 알고리즘** | **EAR**, **MAR**, **PnP** | 졸음 징후 감지 및 머리 포즈 추정 |
+| **데이터 처리** | **NumPy**, **SciPy** | 행렬 연산 및 유클리디안 거리 계산 |
+>>>>>>> f8d4d24f1ddf69f2eb7663a8d20b682adb17b849
 
 ## **💡 핵심 기능 및 알고리즘**
 
-### **1\. 3가지 복합 졸음 감지 알고리즘**
+### **1. 3가지 복합 졸음 감지 알고리즘**
 
 단일 지표의 한계를 극복하기 위해 3가지 지표를 통합하여 졸음 감지 정확도를 높였습니다.
 
 | 지표 | 로직 설명 | 구현 파일 | 임계값 |
-| :---- | :---- | :---- | :---- |
-| **Eye Aspect Ratio (EAR)** | 눈의 수직 거리와 수평 거리의 비율을 계산하여 눈 감김 상태를 감지합니다. **연속된 프레임 (**$\\text{3}$ **프레임 이상)** 동안 임계값 이하일 경우 경고를 발생시킵니다. | EAR.py | $\\text{0.25}$ |
-| **Mouth Aspect Ratio (MAR)** | 입의 수직 거리와 수평 거리의 비율을 계산하여 하품(입 벌림) 상태를 감지합니다. | MAR.py | $\\text{0.79}$ |
-| **Head Pose Estimation** | $\\text{OpenCV}$의 $\\text{solvePnP}$ 함수를 사용하여 얼굴의 $\\text{3D}$ 포즈를 추정하고, 오일러 각도를 변환하여 **머리 기울임 각도**를 계산해 주시 태만을 감지합니다. | HeadPose.py | (로직 내부 정의) |
+|:----|:----|:----|:----|
+| **Eye Aspect Ratio (EAR)** | 눈의 수직 거리와 수평 거리의 비율을 계산하여 눈 감김 상태를 감지합니다. **연속된 프레임 (3 프레임 이상)** 동안 임계값 이하일 경우 경고를 발생시킵니다. | `EAR.py` | **0.25** |
+| **Mouth Aspect Ratio (MAR)** | 입의 수직 거리와 수평 거리의 비율을 계산하여 하품(입 벌림) 상태를 감지합니다. | `MAR.py` | **0.79** |
+| **Head Pose Estimation** | **OpenCV**의 `solvePnP` 함수를 사용하여 얼굴의 **3D** 포즈를 추정하고, 오일러 각도를 변환하여 **머리 기울임 각도**를 계산해 주시 태만을 감지합니다. | `HeadPose.py` | (로직 내부 정의) |
 
 ## **💻 핵심 알고리즘 코드 스니펫 (Core Algorithm Code Snippets)**
 
-### **1\. $\\text{Eye Aspect Ratio (EAR)}$ 계산 로직**
+### **1. Eye Aspect Ratio (EAR) 계산 로직**
 
-EAR.py 파일에 정의된 눈 종횡비 계산 함수입니다. 눈의 6개 랜드마크를 활용하여 눈 깜빡임을 정량화합니다.
+`EAR.py` 파일에 정의된 눈 종횡비 계산 함수입니다. 눈의 6개 랜드마크를 활용하여 눈 깜빡임을 정량화합니다.
 
 ```python
 from scipy.spatial import distance as dist
@@ -47,6 +60,7 @@ def eye_aspect_ratio(eye):
     # 눈 종횡비 계산: EAR = (수직거리_A + 수직거리_B) / (2.0 * 수평거리_C)
     ear = (A + B) / (2.0 * C)
     return ear
+<<<<<<< HEAD
 ```
 
 ### **2\. $\\text{Mouth Aspect Ratio (MAR)}$ 계산 로직**
@@ -148,3 +162,5 @@ python "Driver Drowsiness Detection.py"
 | \[5\] | 오미연, “얼굴 특징점 기반의 졸음운전 감지 알고리즘” | 국내 연구 (감지 알고리즘) |
 | \[6\] | Philipp P. Cafﬁer, Udo Erdmann ,Peter Ullsperger, “The spontaneous eye-blink as sleepiness indicator in patients with obstructive sleep apnoea syndrome-a pilot study” | 학술 논문 (졸음 지표) |
 | \[7\] | dohyeon2’s log, “ $$영상처리$$ 2D영상에서 물체까지 3D 거리 구하기” ($\\text{PnP}$ 구현 참고) | 기술 블로그/구현 가이드 |
+=======
+>>>>>>> f8d4d24f1ddf69f2eb7663a8d20b682adb17b849
