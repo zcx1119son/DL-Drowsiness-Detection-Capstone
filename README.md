@@ -2,13 +2,13 @@
 
 ## **🌟 프로젝트 개요**
 
-본 프로젝트는 $\\text{OpenCV}$와 $\\text{Dlib}$ 라이브러리를 활용하여 **실시간**으로 운전자의 얼굴을 분석하고, **눈 감김, 하품, 머리 기울임**의 세 가지 복합적인 징후를 동시에 감지하여 졸음 운전을 예방하는 캡스톤 프로젝트입니다. $\\text{AI}$ 기반의 $\\text{Computer}$ $\\text{Vision}$ 기술을 적용하여 높은 정확도의 실시간 경고 시스템을 구현하는 데 중점을 두었습니다.
+이 프로젝트는 $\\text{OpenCV}$와 $\\text{Dlib}$ 라이브러리를 활용하여 **실시간**으로 운전자의 얼굴을 분석하고, **눈 감김, 하품, 머리 기울임**의 세 가지 복합적인 징후를 동시에 감지하여 졸음 운전을 예방하는 캡스톤 프로젝트입니다. $\\text{AI}$ 기반의 $\\text{Computer}$ $\\text{Vision}$ 기술을 적용하여 높은 정확도의 실시간 경고 시스템을 구현하는 데 중점을 두었습니다.
 
 ## **⚙️ 주요 기술 스택 (Tech Stack)**
 
 | 분류 | 기술 | 역할 |
 | :---- | :---- | :---- |
-| **핵심 언어** | $\\text{Python 3.x}$ | 전체 시스템 개발 및 알고리즘 구현 |
+| **핵심 언어** | $\\text{Python 3.10}$ | 전체 시스템 개발 및 알고리즘 구현 |
 | **컴퓨터 비전** | $\\text{OpenCV}$, $\\text{imutils}$ | 실시간 비디오 스트림 처리 및 화면 출력 |
 | **얼굴 랜드마크** | $\\text{Dlib}$ (shape\_predictor\_68\_face\_landmarks.dat) | 얼굴 영역 및 $\\text{68}$개 랜드마크 추출 |
 | **핵심 알고리즘** | $\\text{EAR}$, $\\text{MAR}$, $\\text{PnP}$ | 졸음 징후 감지 및 머리 포즈 추정 |
@@ -32,70 +32,73 @@
 
 EAR.py 파일에 정의된 눈 종횡비 계산 함수입니다. 눈의 6개 랜드마크를 활용하여 눈 깜빡임을 정량화합니다.
 
-``` EAR \= (A \+ B) / (2.0 \* C)  
+```python
 from scipy.spatial import distance as dist
 
-def eye\_aspect\_ratio(eye):  
-    \# 수직 눈 좌표 거리: (p2, p6)와 (p3, p5)의 유클리디안 거리  
-    A \= dist.euclidean(eye\[1\], eye\[5\])  
-    B \= dist.euclidean(eye\[2\], eye\[4\])
+def eye_aspect_ratio(eye):
+    # 수직 눈 좌표 거리: (p2, p6)와 (p3, p5)의 유클리디안 거리
+    # [Dlib의 68개 랜드마크 중 눈의 좌표 번호가 eye 배열의 인덱스로 매핑됨]
+    A = dist.euclidean(eye[1], eye[5])
+    B = dist.euclidean(eye[2], eye[4])
 
-    \# 수평 눈 좌표 거리: (p1, p4)의 유클리디안 거리  
-    C \= dist.euclidean(eye\[0\], eye\[3\])  
+    # 수평 눈 좌표 거리: (p1, p4)의 유클리디안 거리 (눈꼬리와 눈 앞머리)
+    C = dist.euclidean(eye[0], eye[3])
       
-    \# 눈 종횡비 계산  
-    ear \= (A \+ B) / (2.0 \* C)  
-    return ear  
-\# 전체 코드 보기: \[EAR.py 소스 코드\]
+    # 눈 종횡비 계산: EAR = (수직거리_A + 수직거리_B) / (2.0 * 수평거리_C)
+    ear = (A + B) / (2.0 * C)
+    return ear
 ```
 
 ### **2\. $\\text{Mouth Aspect Ratio (MAR)}$ 계산 로직**
 
 MAR.py 파일에 정의된 입 종횡비 계산 함수입니다. 입의 12개 랜드마크 중 6개를 활용하여 하품 상태를 감지합니다.
 
-```\# MAR \= (A \+ B) / (2.0 \* C)  
-from scipy.spatial import distance as dist
+```from scipy.spatial import distance as dist
 
-def mouth\_aspect\_ratio(mouth):  
-    \# 수직 입의 좌표 거리: (p51, p59)와 (p53, p57)  
-    A \= dist.euclidean(mouth\[2\], mouth\[10\])   
-    B \= dist.euclidean(mouth\[4\], mouth\[8\]) 
+def mouth_aspect_ratio(mouth):
+    # 수직 입의 좌표 거리: (p51, p59)와 (p53, p57)
+    A = dist.euclidean(mouth[2], mouth[10])      
+    B = dist.euclidean(mouth[4], mouth[8])  
 
-    \# 수평 입의 좌표 거리: (p49, p55)  
-    C \= dist.euclidean(mouth\[0\], mouth\[6\]) 
+    # 수평 입의 좌표 거리: (p49, p55)
+    C = dist.euclidean(mouth[0], mouth[6])  
 
-    \# 입 비율 계산  
-    mar \= (A \+ B) / (2.0 \* C)  
-    return mar  
-\# 전체 코드 보기: \[MAR.py 소스 코드\]
+    # 입 비율 계산: MAR = (수직거리_A + 수직거리_B) / (2.0 * 수평거리_C)
+    mar = (A + B) / (2.0 * C)
+    return mar
 ```
 
 ### **3\. 머리 포즈 추정 ($\\text{Head}$ $\\text{Pose}$ $\\text{Estimation}$) 핵심**
 
 HeadPose.py는 3$\\text{D}$ 모델 좌표와 $\\text{2D}$ 이미지 좌표를 이용해 카메라 행렬을 구성하고, $\\text{OpenCV}$의 **solvePnP** 함수를 사용해 실시간으로 머리의 회전 벡터를 추정합니다.
 
-```from cv2 import cv2  
-\# ... (model\_points 정의)
+```python
+import cv2
+import numpy as np
 
-def getHeadTiltAndCoords(size, image\_points, frame\_height):  
-    \# 카메라 행렬 구성  
-    \# (cv2.solvePnP를 위한 필수 단계)  
-    focal\_length \= size\[1\]  
-    center \= (size\[1\]/2, size\[0\]/2)  
-    camera\_matrix \= np.array(\[  
-        \# ... (카메라 행렬 값)  
-    \])  
-    dist\_coeffs \= np.zeros((4, 1))
+def getHeadTiltAndCoords(size, image_points, frame_height):
+    # 카메라 행렬 구성
+    focal_length = size[1]
+    center = (size[1]/2, size[0]/2)
+      
+    # 3x3 카메라 행렬 (임시 값, 실제 구현에 맞게 조정 필요)
+    camera_matrix = np.array([
+        [focal_length, 0, center[0]],
+        [0, focal_length, center[1]],
+        [0, 0, 1]
+    ], dtype="double")
+      
+    dist_coeffs = np.zeros((4, 1))
 
-    \# PnP (Perspective-n-Point) 알고리즘을 사용해 머리 자세 추정  
-    (\_, rotation\_vector, translation\_vector) \= cv2.solvePnP(  
-        model\_points, image\_points, camera\_matrix, dist\_coeffs, flags \= cv2.SOLVEPNP\_ITERATIVE  
+    # PnP (Perspective-n-Point) 알고리즘을 사용해 머리 자세 추정
+    (_, rotation_vector, translation_vector) = cv2.solvePnP(
+        model_points, image_points, camera_matrix, dist_coeffs,
+        flags=cv2.SOLVEPNP_ITERATIVE
     )
 
-    \# 회전 벡터를 행렬로 변환 후 오일러 각도를 추출하여 'head\_tilt\_degree' 계산  
-    \# ... (rotationMatrixToEulerAngles 호출)
-
-\# 전체 코드 보기: \[HeadPose.py 소스 코드\]
+    # 회전 벡터를 행렬로 변환 후 오일러 각도를 추출하여 'head_tilt_degree' 계산
+    # ... (rotationMatrixToEulerAngles 호출)
+    return rotation_vector, translation_vector  # 예시 반환
 ```
 
 ## **🛠️ 실행 방법 (How to Run)**
@@ -112,7 +115,7 @@ pip install \-r requirements.txt
 
 시스템이 얼굴 랜드마크를 정확하게 예측하기 위해 $\\text{Dlib}$의 랜드마크 예측 모델 파일이 필요합니다.
 
-1. [shape\_predictor\_68\_face\_landmarks.dat](https://www.google.com/search?q=http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2) 파일을 다운로드합니다.  
+1. [shape\_predictor\_68\_face\_landmarks.dat](https://www.google.com/search?q=%5Bhttp://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2%5D\(http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2\)) 파일을 다운로드합니다.  
 2. 압축을 해제한 후, 해당 파일을 저장소 내의 **dlib\_shape\_predictor** 폴더 안에 위치시킵니다.
 
 ### **3\. 애플리케이션 실행**
@@ -125,7 +128,7 @@ python "Driver Drowsiness Detection.py"
 
 ## **🤝 기여 및 참고 자료 (Contributions & References)**
 
-본 프로젝트는 기존의 $\\text{Computer}$ $\\text{Vision}$ 분야에서 확립된 학술 연구 및 공개된 기술을 기반으로 구현되었습니다.
+이 프로젝트는 기존의 $\\text{Computer}$ $\\text{Vision}$ 분야에서 확립된 학술 연구 및 공개된 기술을 기반으로 구현되었습니다.
 
 ### **1\. 프로젝트 관련 문서 및 자료**
 
@@ -144,5 +147,4 @@ python "Driver Drowsiness Detection.py"
 | \[4\] | Tereza Soukupovă and Jan Ćech, “Real-TIme Eye Blink Detection using Facial Landmarks” ($\\text{EAR}$ 기반) | **핵심 기술 논문** |
 | \[5\] | 오미연, “얼굴 특징점 기반의 졸음운전 감지 알고리즘” | 국내 연구 (감지 알고리즘) |
 | \[6\] | Philipp P. Cafﬁer, Udo Erdmann ,Peter Ullsperger, “The spontaneous eye-blink as sleepiness indicator in patients with obstructive sleep apnoea syndrome-a pilot study” | 학술 논문 (졸음 지표) |
-| \[7\] | dohyeon2’s log, “\[영상처리\] 2D영상에서 물체까지 3D 거리 구하기” ($\\text{PnP}$ 구현 참고) | 기술 블로그/구현 가이드 |
-
+| \[7\] | dohyeon2’s log, “ $$영상처리$$ 2D영상에서 물체까지 3D 거리 구하기” ($\\text{PnP}$ 구현 참고) | 기술 블로그/구현 가이드 |
