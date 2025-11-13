@@ -153,8 +153,8 @@ python "Driver Drowsiness [Detection.py](http://detection.py/)"
 
 | 자료 | 설명 | 링크 |
 | --- | --- | --- |
-| **졸업 작품 전체 자료** | 발표 **PPT**, 최종 보고서 **PDF**, 등 모든 프로젝트 문서 자료 | 팀 프로젝](https://www.notion.so/2a72e77d543b80a09c49dfe5a4492bb9?source=copy_link) |
-| **소스 코드 저장소** | 프로젝트 **Python** 소스 코드 및 **README** | https://github.com/zcx1119son/DL-Drowsiness-Detection-Capstone |
+| **졸업 작품 전체 자료** | 발표 **PPT**, 최종 보고서 **PDF**, 등 모든 프로젝트 문서 자료 | [팀 프로젝트](https://www.notion.so/2a72e77d543b80a09c49dfe5a4492bb9?source=copy_link) |
+| **소스 코드 저장소** | 프로젝트 **Python** 소스 코드 및 **README** | [소스 링크]https://github.com/zcx1119son/DL-Drowsiness-Detection-Capstone |
 
 ### **2. 핵심 알고리즘 및 학술적 참고 문헌**
 
@@ -162,8 +162,7 @@ python "Driver Drowsiness [Detection.py](http://detection.py/)"
 | --- | --- | --- |
 | [1] | 이승학. “졸음운전과 교통사고” | 국내 연구 (교통사고) |
 | [2] | 이대연, “졸음방지를 위한 안면검출 해석과 서비스에 관한 연구” | 국내 연구 (졸음방지) |
-| [3] | Vahid Kazemi and Josephine Sullivan, “One Millisecond Face Alignment with an Ensemble of Regression Trees” **Dlib** 랜드마크 모델 기반 논문) | **핵심 기술 논문** |
-| [4] | Tereza Soukupovă and Jan Ćech, “Real-TIme Eye Blink Detection using Facial Landmarks” ($\\text{EAR}$ 기반) | **핵심 기술 논문** |
+| [3] | Vahid Kazemi and Josephine Sullivan, “One Millisecond Face Alignment with an Ensembl[($\\text{EAR}$ 기반) | **핵심 기술 논문** |
 | [5] | 오미연, “얼굴 특징점 기반의 졸음운전 감지 알고리즘” | 국내 연구 (감지 알고리즘) |
 | [6] | Philipp P. Cafﬁer, Udo Erdmann ,Peter Ullsperger, “The spontaneous eye-blink as sleepiness indicator in patients with obstructive sleep apnoea syndrome-a pilot study” | 학술 논문 (졸음 지표) |
 | [7] | dohyeon2’s log, “ **영상처리** 2D영상에서 물체까지 3D 거리 구하기” **PnP** 구현 참고) | 기술 블로그/구현 가이드 |
